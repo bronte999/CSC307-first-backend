@@ -113,10 +113,14 @@ function findUserByNameAndJob(name, job) {
 }*/
 
 app.post('/users', (req, res) => {
-    const userToAdd = req.body;
+    const userToAdd = Object.assign({}, {"id": randomIDGen()}, req.body);
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).end();
 });
+
+function randomIDGen(){
+    return Math.floor(Math.random() * 1000000).toString();
+}
 
 function addUser(user){
     users['users_list'].push(user);
