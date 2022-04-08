@@ -31,21 +31,23 @@ const users = {
           name: 'Dennis',
           job: 'Bartender',
        }
-    ]
+    ] 
  };
-
+  
 app.use(cors());
-app.use(express.json());
-
-
+app.use(express.json()); 
+ 
 app.delete('/users/:id', (req, res) => {
     const id = req.params['id']; //or req.params.id
-    let result = findUserById(id);
+    let result = findUserById(id); 
+    console.log(result);
     if (result === undefined || result.length == 0)
         res.status(404).send('Resource not found.');
     else {
-        users['users_list'].splice(users['users_list'].indexOf(result),1);
-        res.send(users);
+        //users['users_list'].splice(users['users_list'].indexOf(result),1);
+        users['users_list'] = users['users_list'].filter( (user) => user['id'] !== id);
+        console.log(users);
+        res.status(204).end();
     }
 });
 
